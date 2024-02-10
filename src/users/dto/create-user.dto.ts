@@ -31,7 +31,7 @@ export class CreateUserDto {
   @IsStrongPassword()
   @ApiProperty({
     description: 'Password',
-    default: 'password123!',
+    default: 'Password123!',
   })
   password: string;
 
