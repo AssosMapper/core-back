@@ -6,6 +6,7 @@ import {
   IsStrongPassword,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsMatch } from '../../decorators/IsMatchConstraint.decorator';
 
 export class CreateUserDto {
   @IsEmail()
@@ -33,6 +34,16 @@ export class CreateUserDto {
     default: 'password123!',
   })
   password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsStrongPassword()
+  @IsMatch('password')
+  @ApiProperty({
+    description: 'Confirm Password',
+    default: 'Password123!',
+  })
+  confirm_password: string;
 
   @IsOptional()
   @IsString()
