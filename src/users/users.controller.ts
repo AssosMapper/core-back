@@ -12,6 +12,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 
 @ApiTags('Users')
 @ApiBearerAuth()
@@ -25,8 +26,8 @@ export class UsersController {
   }
 
   @Get()
-  findAll(): Promise<Array<Omit<User, 'password'>>> {
-    return this.usersService.findAll();
+  findAll(@Paginate() query: PaginateQuery): Promise<Paginated<User>> {
+    return this.usersService.findAll(query);
   }
 
   @Get(':id')

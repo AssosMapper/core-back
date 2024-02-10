@@ -1,5 +1,5 @@
 ### get all users
-GET {{ baseURL }}/users
+GET {{ baseURL }}/users?limit=1&page=2&select=id
 
 ### get a user
 GET {{ baseURL }}/users/a69412ca-d3dc-4537-9124-e59ff341e8e4
@@ -11,8 +11,9 @@ POST {{ baseURL }}//users
 Content-Type: application/json
 
 {
-  "username": "username",
-  "password": "password123456A."
+  "username": "username2",
+  "password": "password123456A.",
+  "confirm_password": "password123456A."
 }
 
 ### update a user
