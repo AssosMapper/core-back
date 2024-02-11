@@ -11,8 +11,9 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
+import { ApiPaginationQuery } from '../decorators/ApiPaginationQuery.decorator';
 
 @ApiTags('Users')
 @ApiBearerAuth()
@@ -26,6 +27,8 @@ export class UsersController {
   }
 
   @Get()
+  @ApiResponse({ status: 200, type: Paginated<User> })
+  @ApiPaginationQuery({ canSelect: false })
   findAll(@Paginate() query: PaginateQuery): Promise<Paginated<User>> {
     return this.usersService.findAll(query);
   }
