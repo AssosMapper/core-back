@@ -15,7 +15,7 @@ import { Repository } from 'typeorm';
 export class UsersService {
   constructor(
     @Inject('USER_REPOSITORY')
-    private userRepository: Repository<User>,
+    private readonly userRepository: Repository<User>,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
