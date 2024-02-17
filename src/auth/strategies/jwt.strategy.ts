@@ -12,7 +12,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
   async validate(payload: any) {
-    // Payload is the JWT claims. Return the user object or claims you want to be available in request.user
-    return { userId: payload.id, email: payload.username };
+    return { userId: payload.sub, email: payload.username };
   }
 }

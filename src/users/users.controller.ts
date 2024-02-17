@@ -11,12 +11,13 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { ApiPaginationQuery } from '../decorators/ApiPaginationQuery.decorator';
+import { BearAuthToken } from '../decorators/BearerAuth.decorator';
 
 @ApiTags('Users')
-@ApiBearerAuth()
+@BearAuthToken()
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

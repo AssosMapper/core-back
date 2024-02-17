@@ -1,7 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
-import { JwtStrategy } from './strategies/JwtStrategy';
 import { User } from '../users/entities/user.entity';
 import { comparePassword } from '../utils/auth.utils';
 import { UsersService } from '../users/users.service';
@@ -11,7 +10,6 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly jwtStrategy: JwtStrategy,
     private readonly userService: UsersService,
   ) {}
 
