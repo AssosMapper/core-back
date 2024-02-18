@@ -11,7 +11,11 @@
     ```
 * Installer les dépendances du projet
     ```sh
-        docker-compose exec core-back npm install
+        docker exec core-back npm install
+    ```
+* Lancer les seeders pour avoir des données de test
+    ```sh
+        docker exec core-back npm run seed
     ```
 * Accéder à la documentation de l'api à l'adresse suivante
     ```
