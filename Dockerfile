@@ -12,13 +12,5 @@ RUN npm install
 
 RUN  npm i -g @nestjs/cli
 
-
-# Copy the rest of your application code
-COPY . .
-
-# Expose the port your app runs on
-EXPOSE 3000
-RUN chmod 777 -R ./
-
 # Command to run your app
 CMD ["npm", "run", "start:dev"]
