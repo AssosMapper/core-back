@@ -108,6 +108,8 @@ export class UsersService {
   }
 
   async seed() {
+    //drop all users
+    await this.userRepository.delete({});
     const users = [];
     for (let i = 0; i < 100; i++) {
       const user = new User();
@@ -119,6 +121,7 @@ export class UsersService {
       user.password = faker.internet.password();
       users.push(user);
     }
+    console.log('Seeding users...');
     await this.userRepository.save(users);
   }
 }
