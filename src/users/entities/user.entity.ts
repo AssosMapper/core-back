@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToMany } from 'typeorm';
 import { EntityStructure } from '../../structures/entity.structure';
+import { Permission } from '../../permissions/entities/permission.entity';
 
 @Entity()
 export class User extends EntityStructure {
@@ -32,8 +33,6 @@ export class User extends EntityStructure {
   })
   phone?: string;
 
-  @Column({
-    nullable: true,
-  })
-  role?: string;
+  @ManyToMany(() => Permission, (permission) => permission.users)
+  permissions: Array<Permission>;
 }

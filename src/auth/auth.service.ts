@@ -43,7 +43,6 @@ export class AuthService {
       access_token: this.jwtService.sign(
         {
           sub: user.id,
-          username: user.username,
         },
         {
           expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,

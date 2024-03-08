@@ -19,24 +19,27 @@ export class PermissionsService {
     await this.permissionRepository.delete({});
     let entities = this.findEntities(path.join(__dirname, '../'));
     let policies = [] as Array<Permission>;
+    let permission = new Permission();
+    permission.permission = '*';
+    policies.push(permission);
     for (let entity of entities) {
-      let permission = new Permission();
-      permission.permission = entity + ':create';
+      permission = new Permission();
+      permission.permission = (entity + ':create').toLowerCase();
       policies.push(permission);
       permission = new Permission();
-      permission.permission = entity + ':readOne';
+      permission.permission = (entity + ':read').toLowerCase();
       policies.push(permission);
       permission = new Permission();
-      permission.permission = entity + ':readMany';
+      permission.permission = (entity + ':list').toLowerCase();
       policies.push(permission);
       permission = new Permission();
-      permission.permission = entity + ':readOwn';
+      permission.permission = (entity + ':self').toLowerCase();
       policies.push(permission);
       permission = new Permission();
-      permission.permission = entity + ':update';
+      permission.permission = (entity + ':update').toLowerCase();
       policies.push(permission);
       permission = new Permission();
-      permission.permission = entity + ':delete';
+      permission.permission = (entity + ':delete').toLowerCase();
       policies.push(permission);
     }
     //create permissions
