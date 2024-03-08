@@ -26,7 +26,6 @@ export class UsersService {
     }
     if (createUserDto.email) {
       const emailUser = await this.findByEmail(createUserDto.email);
-      console.log(emailUser);
       if (emailUser) {
         throw new UnauthorizedException('User already exists with this email');
       }
