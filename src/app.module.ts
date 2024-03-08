@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { MediaModule } from './media/media.module';
+import { PermissionsModule } from './permissions/permissions.module';
 import config from './config/config';
 
 @Module({
@@ -16,6 +17,7 @@ import config from './config/config';
     AuthModule,
     UsersModule,
     MediaModule,
+    PermissionsModule,
   ],
 })
 export class AppModule {}

@@ -17,8 +17,11 @@ import { CreateMediaDto } from './dto/create-media.dto';
 import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { Media } from './entities/media.entity';
 import { ApiPaginationQuery } from '../decorators/ApiPaginationQuery.decorator';
+import { NeedPermissions } from '../decorators/need-permission.decorator';
+import { BearAuthToken } from '../decorators/BearerAuth.decorator';
 
 @Controller('media')
+@BearAuthToken()
 @ApiTags('Media')
 export class MediaController {
   constructor(private readonly mediaService: MediaService) {}
@@ -26,16 +29,19 @@ export class MediaController {
   @Get()
   @ApiResponse({ status: 200, type: Paginated<Media> })
   @ApiPaginationQuery({ canSelect: true })
+  @NeedPermissions('media:list')
   findAll(@Paginate() query: PaginateQuery): Promise<Paginated<Media>> {
     return this.mediaService.findAll(query);
   }
 
   @Get(':id')
+  @NeedPermissions('media:read')
   findOne(@Param('id') id: string) {
     return this.mediaService.findOne(id);
   }
 
   @Patch(':id')
+  @NeedPermissions('media:update')
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({
@@ -51,11 +57,13 @@ export class MediaController {
   }
 
   @Delete(':id')
+  @NeedPermissions('media:delete')
   remove(@Param('id') id: string) {
     return this.mediaService.remove(id);
   }
 
   @Post('upload')
+  @NeedPermissions('media:create')
   @UseInterceptors(FileInterceptor('file'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({

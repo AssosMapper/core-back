@@ -40,15 +40,18 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     const user = await this.validate(loginDto.username, loginDto.password);
     return {
-      access_token: this.jwtService.sign({
-        sub: user.id,
-        username: user.username,
-      }),
+      access_token: this.jwtService.sign(
+        {
+          sub: user.id,
+        },
+        {
+          expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
+        },
+      ),
       expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
       user: user,
     };
   }
-
   /**
    * Register user
    */

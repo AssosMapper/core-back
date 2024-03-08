@@ -26,7 +26,6 @@ export class UsersService {
     }
     if (createUserDto.email) {
       const emailUser = await this.findByEmail(createUserDto.email);
-      console.log(emailUser);
       if (emailUser) {
         throw new UnauthorizedException('User already exists with this email');
       }
@@ -78,6 +77,7 @@ export class UsersService {
   async findOne(id: string): Promise<Omit<User, 'password'>> {
     const user = await this.userRepository.findOne({
       where: { id },
+      relations: ['permissions'],
     });
     if (!user) {
       throw new NotFoundException('User not found');
@@ -98,6 +98,7 @@ export class UsersService {
   async findByUsername(username: string): Promise<User | null> {
     return await this.userRepository.findOne({
       where: { username },
+      relations: ['permissions'],
     });
   }
 
@@ -108,6 +109,8 @@ export class UsersService {
   }
 
   async seed() {
+    //drop all users
+    await this.userRepository.delete({});
     const users = [];
     for (let i = 0; i < 100; i++) {
       const user = new User();
@@ -119,6 +122,7 @@ export class UsersService {
       user.password = faker.internet.password();
       users.push(user);
     }
+    console.log('Seeding users...');
     await this.userRepository.save(users);
   }
 }
