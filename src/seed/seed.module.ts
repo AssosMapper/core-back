@@ -6,6 +6,8 @@ import config from '../config/config';
 import { DatabaseModule } from '../database/database.module';
 import { PermissionsModule } from '../permissions/permissions.module';
 import { PermissionSeedService } from './seeders/permission-seed.service';
+import { User } from '../users/entities/user.entity';
+import { Permission } from '../permissions/entities/permission.entity';
 
 @Module({
   providers: [UserSeedService, PermissionSeedService],
@@ -14,7 +16,7 @@ import { PermissionSeedService } from './seeders/permission-seed.service';
       isGlobal: true,
       load: [config],
     }),
-    DatabaseModule,
+    DatabaseModule.forRoot([User, Permission]),
     UsersModule,
     PermissionsModule,
   ],

@@ -6,6 +6,9 @@ import { ConfigModule } from '@nestjs/config';
 import { MediaModule } from './media/media.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import config from './config/config';
+import { User } from './users/entities/user.entity';
+import { Media } from './media/entities/media.entity';
+import { Permission } from './permissions/entities/permission.entity';
 
 @Module({
   imports: [
@@ -13,7 +16,7 @@ import config from './config/config';
       isGlobal: true,
       load: [config],
     }),
-    DatabaseModule,
+    DatabaseModule.forRoot([User, Media, Permission]),
     AuthModule,
     UsersModule,
     MediaModule,
