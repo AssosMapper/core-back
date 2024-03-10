@@ -1,15 +1,14 @@
 import { Module } from '@nestjs/common';
 import { MediaService } from './media.service';
 import { MediaController } from './media.controller';
-import { MediaProvider } from './providers/media.provider';
-import { DatabaseModule } from '../database/database.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { UsersModule } from '../users/users.module';
 
 @Module({
   controllers: [MediaController],
   imports: [
-    DatabaseModule,
+    UsersModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', 'uploads'),
       serveStaticOptions: {
@@ -17,6 +16,6 @@ import { join } from 'path';
       },
     }),
   ],
-  providers: [MediaProvider, MediaService],
+  providers: [MediaService],
 })
 export class MediaModule {}

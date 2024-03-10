@@ -19,7 +19,7 @@
     ```
 * Accéder à la documentation de l'api à l'adresse suivante
     ```
-        http://localhost:3000/api
+        http://localhost:3000/docs
     ```
   
 ### Pour accéder au container docker de l'application
