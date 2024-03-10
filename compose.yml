@@ -2,14 +2,17 @@ version: '3.8'
 services:
   app:
     container_name: core-back
-    build:
-      context: .
-    user: "1000:1000"
+    image: node:20
+    user: root
+    working_dir: /usr/src/app
+    entrypoint: sh -c
+    depends_on:
+      - database
     ports:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
-    command: "npm run start:dev"
+    command: '"npm install -g @nestjs/cli && npm install && npm run start:dev"'
 
   database:
     image: mariadb:10.6.15
