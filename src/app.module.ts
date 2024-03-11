@@ -5,18 +5,18 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MediaModule } from './media/media.module';
 import { PermissionsModule } from './permissions/permissions.module';
-import config from './config/config';
 import { User } from './users/entities/user.entity';
 import { Media } from './media/entities/media.entity';
 import { Permission } from './permissions/entities/permission.entity';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { validationSchema } from './config/config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [config],
+      validationSchema: validationSchema,
     }),
     DatabaseModule.forRoot([User, Media, Permission]),
     ThrottlerModule.forRootAsync({
