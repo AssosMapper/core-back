@@ -17,9 +17,12 @@ import { ApiPaginationQuery } from '../decorators/ApiPaginationQuery.decorator';
 import { BearAuthToken } from '../decorators/BearerAuth.decorator';
 import { NeedPermissions } from '../decorators/need-permission.decorator';
 
-@ApiTags('Users')
+@ApiTags()
 @BearAuthToken()
-@Controller('users')
+@Controller({
+  path: 'users',
+  version: '1',
+})
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
