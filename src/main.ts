@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
@@ -19,9 +19,15 @@ async function bootstrap() {
    */
   app.useGlobalPipes(
     new ValidationPipe({
-      enableDebugMessages: true,
+      enableDebugMessages: false,
     }),
   );
+  /**
+   * Using versioning
+   */
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
   /**
    * Documentation using Swagger
    */
@@ -38,4 +44,5 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
+
 bootstrap();

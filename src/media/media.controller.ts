@@ -20,7 +20,10 @@ import { ApiPaginationQuery } from '../decorators/ApiPaginationQuery.decorator';
 import { NeedPermissions } from '../decorators/need-permission.decorator';
 import { BearAuthToken } from '../decorators/BearerAuth.decorator';
 
-@Controller('media')
+@Controller({
+  path: 'media',
+  version: '1',
+})
 @BearAuthToken()
 @ApiTags('Media')
 export class MediaController {
