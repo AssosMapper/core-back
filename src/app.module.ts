@@ -11,6 +11,7 @@ import { Permission } from './permissions/entities/permission.entity';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { validationSchema } from './config/config';
+import { MeModule } from './me/me.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { validationSchema } from './config/config';
     UsersModule,
     MediaModule,
     PermissionsModule,
+    MeModule,
   ],
 
   providers: [

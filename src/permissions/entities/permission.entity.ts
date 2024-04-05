@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
+import { Column, Entity, ManyToMany } from 'typeorm';
 import { EntityStructure } from '../../structures/entity.structure';
 import { User } from '../../users/entities/user.entity';
 
@@ -9,9 +9,6 @@ export class Permission extends EntityStructure {
   })
   permission: string;
 
-  @ManyToMany(() => User, (user) => user.permissions, {
-    cascade: ['remove'],
-  })
-  @JoinTable()
+  @ManyToMany(() => User, (user) => user.permissions)
   users: Array<User>;
 }

@@ -17,7 +17,7 @@ import { ApiPaginationQuery } from '../decorators/ApiPaginationQuery.decorator';
 import { BearAuthToken } from '../decorators/BearerAuth.decorator';
 import { NeedPermissions } from '../decorators/need-permission.decorator';
 
-@ApiTags()
+@ApiTags('Users')
 @BearAuthToken()
 @Controller({
   path: 'users',

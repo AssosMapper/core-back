@@ -20,14 +20,25 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const usernameUser = await this.findByUsername(createUserDto.username);
-    if (usernameUser) {
+    const usernameUser = await this.findByUsername(
+      createUserDto.username,
+      true,
+    );
+    if (usernameUser && usernameUser.deletedAt === null) {
       throw new UnauthorizedException('User already exists with this username');
+    } else if (usernameUser && usernameUser.deletedAt !== null) {
+      throw new UnauthorizedException(
+        'User already exists with this username but deleted. It must be restored',
+      );
     }
     if (createUserDto.email) {
-      const emailUser = await this.findByEmail(createUserDto.email);
-      if (emailUser) {
+      const emailUser = await this.findByEmail(createUserDto.email, true);
+      if (emailUser && emailUser.deletedAt === null) {
         throw new UnauthorizedException('User already exists with this email');
+      } else if (emailUser && emailUser.deletedAt !== null) {
+        throw new UnauthorizedException(
+          'User already exists with this email but deleted. It must be restored',
+        );
       }
     }
     const user = new User();
@@ -95,16 +106,24 @@ export class UsersService {
     return await this.userRepository.delete(id);
   }
 
-  async findByUsername(username: string): Promise<User | null> {
+  async findByUsername(
+    username: string,
+    withDeleted: boolean = false,
+  ): Promise<User | null> {
     return await this.userRepository.findOne({
       where: { username },
       relations: ['permissions'],
+      withDeleted,
     });
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(
+    email: string,
+    withDeleted: boolean = true,
+  ): Promise<User | null> {
     return await this.userRepository.findOne({
       where: { email },
+      withDeleted,
     });
   }
 
