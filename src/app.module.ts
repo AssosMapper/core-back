@@ -12,6 +12,8 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { validationSchema } from './config/config';
 import { MeModule } from './me/me.module';
+import { RolesModule } from './roles/roles.module';
+import { Role } from './roles/entities/role.entity';
 
 @Module({
   imports: [
@@ -19,7 +21,7 @@ import { MeModule } from './me/me.module';
       isGlobal: true,
       validationSchema: validationSchema,
     }),
-    DatabaseModule.forRoot([User, Media, Permission]),
+    DatabaseModule.forRoot([User, Media, Role, Permission]),
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule], // Assurez-vous que ConfigModule est importé
       inject: [ConfigService],
@@ -43,6 +45,7 @@ import { MeModule } from './me/me.module';
     MediaModule,
     PermissionsModule,
     MeModule,
+    RolesModule,
   ],
 
   providers: [
