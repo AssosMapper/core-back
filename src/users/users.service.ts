@@ -10,7 +10,6 @@ import { User } from './entities/user.entity';
 import { hashPassword } from '../utils/auth.utils';
 import { paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { Repository } from 'typeorm';
-import { faker } from '@faker-js/faker';
 
 @Injectable()
 export class UsersService {
@@ -112,7 +111,7 @@ export class UsersService {
   ): Promise<User | null> {
     return await this.userRepository.findOne({
       where: { username },
-      relations: ['permissions'],
+      relations: ['roles.permissions'],
       withDeleted,
     });
   }
@@ -125,23 +124,5 @@ export class UsersService {
       where: { email },
       withDeleted,
     });
-  }
-
-  async seed() {
-    //drop all users
-    await this.userRepository.delete({});
-    const users = [];
-    for (let i = 0; i < 100; i++) {
-      const user = new User();
-      user.firstName = faker.person.firstName();
-      user.lastName = faker.person.lastName();
-      user.email = faker.internet.email();
-      user.username = faker.internet.userName();
-      user.phone = faker.phone.number();
-      user.password = faker.internet.password();
-      users.push(user);
-    }
-    console.log('Seeding users...');
-    await this.userRepository.save(users);
   }
 }

@@ -8,15 +8,22 @@ import { Permission } from '../permissions/entities/permission.entity';
 import { validationSchema } from '../config/config';
 import { DatabaseProvider } from '../database/databaseProvider';
 import { UsersModule } from '../users/users.module';
+import { Role } from '../roles/entities/role.entity';
+import { RoleSeedService } from './seeders/role-seed.service';
 
 @Module({
-  providers: [UserSeedService, PermissionSeedService, DatabaseProvider],
+  providers: [
+    UserSeedService,
+    RoleSeedService,
+    PermissionSeedService,
+    DatabaseProvider,
+  ],
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema: validationSchema,
     }),
-    DatabaseModule.forRoot([User, Permission]),
+    DatabaseModule.forRoot([User, Role, Permission]),
     UsersModule,
   ],
 })

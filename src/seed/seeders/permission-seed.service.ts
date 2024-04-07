@@ -40,7 +40,8 @@ export class PermissionSeedService {
     }
     //create permissions
     console.log('Seeding permissions...');
-    return await this.permissionRepository.save(policies);
+    await this.permissionRepository.save(policies);
+    console.log('Seeded permissions...');
   }
 
   async drop() {
@@ -48,9 +49,8 @@ export class PermissionSeedService {
     const queryRunner = this.datasource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
-
     try {
-      await queryRunner.query(`DELETE FROM user_permissions_permission`);
+      await queryRunner.query(`DELETE FROM role_permissions_permission`);
       await queryRunner.query(`DELETE FROM permission`);
       await queryRunner.commitTransaction();
     } catch (err) {
@@ -59,6 +59,7 @@ export class PermissionSeedService {
     } finally {
       await queryRunner.release();
     }
+    console.log('Dropped permissions...');
   }
 
   private findEntities(directory: string): string[] {
