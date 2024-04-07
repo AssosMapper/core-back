@@ -15,7 +15,7 @@ export class PermissionGuard implements CanActivate {
       context.getHandler(),
     );
     if (!requiredPermissions) {
-      return true; // ou false, selon votre logique d'authentification
+      return true;
     }
 
     const request = context.switchToHttp().getRequest();
@@ -24,10 +24,13 @@ export class PermissionGuard implements CanActivate {
     if (!user) {
       return false;
     } else {
-      let permissions = user.permissions.map((p) => p.permission);
-      if (permissions.includes('*')) return true;
+      let permissions = user.roles.map((role) => role.permissions);
+      let flattedPermissions = permissions
+        .flat()
+        .map((permission) => permission.permission);
+      if (flattedPermissions.includes('*')) return true;
       for (const permission of requiredPermissions) {
-        if (!permissions.includes(permission)) {
+        if (!flattedPermissions.includes(permission)) {
           return false;
         }
       }

@@ -88,7 +88,7 @@ export class UsersService {
   async findOne(id: string): Promise<Omit<User, 'password'>> {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['permissions'],
+      relations: ['roles.permissions'],
     });
     if (!user) {
       throw new NotFoundException('User not found');

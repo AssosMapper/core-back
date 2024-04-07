@@ -6,7 +6,7 @@ import {
   ManyToMany,
 } from 'typeorm';
 import { EntityStructure } from '../../structures/entity.structure';
-import { Permission } from '../../permissions/entities/permission.entity';
+import { Role } from '../../roles/entities/role.entity';
 
 @Entity()
 export class User extends EntityStructure {
@@ -42,9 +42,9 @@ export class User extends EntityStructure {
   @DeleteDateColumn()
   deletedAt: Date;
 
-  @ManyToMany(() => Permission, (permission) => permission.users, {
+  @ManyToMany(() => Role, (role) => role.users, {
     cascade: ['remove'],
   })
   @JoinTable()
-  permissions: Array<Permission>;
+  roles: Array<Role>;
 }
