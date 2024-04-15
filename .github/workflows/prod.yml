@@ -26,7 +26,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           password: ${{ secrets.SSH_PASSWORD }}
           source: "./dist/*"
-          target: "/home/${{ secrets.SSH_USER }}/apps/joinus/backend"
+          target: "/home/${{ secrets.SSH_USER }}/apps/joinus/backend/"
 
   post-ci:
     runs-on: ubuntu-latest
@@ -40,4 +40,4 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd /home/${{ secrets.SSH_USER }}/apps/joinus/backend && pm2 restart joinus_backend
+            cd /home/${{ secrets.SSH_USER }}/apps/joinus/backend && npm install && npm run post-ci
