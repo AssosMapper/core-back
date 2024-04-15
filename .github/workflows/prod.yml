@@ -43,4 +43,4 @@ jobs:
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-            cd /home/${{ secrets.SSH_USER }}/apps/joinus/backend && npm install && npm run post-ci
+            cd /home/${{ secrets.SSH_USER }}/apps/joinus/backend && mv dist/* ./* && rmdir dist && npm install && npm run post-ci
