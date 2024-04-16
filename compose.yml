@@ -14,7 +14,7 @@ services:
     command: '"npm install -g @nestjs/cli && npm install && npm run start:dev"'
 
   database:
-    image: mariadb:11.3.2
+    image: mariadb:10.6.15
     container_name: core-back-db
     environment:
       MYSQL_DATABASE: ${MYSQL_DATABASE:-app}
