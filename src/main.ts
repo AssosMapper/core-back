@@ -36,7 +36,7 @@ async function bootstrap() {
   const options = new DocumentBuilder()
     .setTitle('Join Us API')
     .setDescription(
-      "Api for Join Us, a platform for sharing association'sevents.",
+      "Api for Join Us, a platform for sharing association's events.",
     )
     .setVersion('1.0')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
