@@ -25,7 +25,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "package.json,ecosystem.config.js,dist"
+          source: "."
           target: "/home/${{ secrets.SSH_USER }}/apps/joinus/backend/"
 
   post-ci:
