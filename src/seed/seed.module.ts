@@ -10,12 +10,15 @@ import { DatabaseProvider } from '../database/databaseProvider';
 import { UsersModule } from '../users/users.module';
 import { Role } from '../roles/entities/role.entity';
 import { RoleSeedService } from './seeders/role-seed.service';
+import { AssociationSeedService } from './seeders/association-seed.service';
+import { Association } from '../association/entities/association.entity';
 
 @Module({
   providers: [
     UserSeedService,
     RoleSeedService,
     PermissionSeedService,
+    AssociationSeedService,
     DatabaseProvider,
   ],
   imports: [
@@ -23,7 +26,7 @@ import { RoleSeedService } from './seeders/role-seed.service';
       isGlobal: true,
       validationSchema: validationSchema,
     }),
-    DatabaseModule.forRoot([User, Role, Permission]),
+    DatabaseModule.forRoot([User, Role, Permission, Association]),
     UsersModule,
   ],
 })

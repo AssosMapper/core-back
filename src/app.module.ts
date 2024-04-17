@@ -14,6 +14,9 @@ import { validationSchema } from './config/config';
 import { MeModule } from './me/me.module';
 import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/entities/role.entity';
+import { AssociationModule } from './association/association.module';
+import { Staff } from './association/entities/staff.entity';
+import { Association } from './association/entities/association.entity';
 
 @Module({
   imports: [
@@ -21,7 +24,7 @@ import { Role } from './roles/entities/role.entity';
       isGlobal: true,
       validationSchema: validationSchema,
     }),
-    DatabaseModule.forRoot([User, Media, Role, Permission]),
+    DatabaseModule.forRoot([User, Media, Role, Permission, Association, Staff]),
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule], // Assurez-vous que ConfigModule est importé
       inject: [ConfigService],
@@ -46,6 +49,7 @@ import { Role } from './roles/entities/role.entity';
     PermissionsModule,
     MeModule,
     RolesModule,
+    AssociationModule,
   ],
 
   providers: [
