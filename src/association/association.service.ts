@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Controller, Inject, Injectable } from '@nestjs/common';
 import { CreateAssociationDto } from './dto/create-association.dto';
 import { UpdateAssociationDto } from './dto/update-association.dto';
 import { Repository } from 'typeorm';
@@ -6,8 +6,14 @@ import { Association } from './entities/association.entity';
 import { paginate, PaginateQuery } from 'nestjs-paginate';
 import { BearAuthToken } from '../decorators/BearerAuth.decorator';
 import { NeedPermissions } from '../decorators/need-permission.decorator';
+import { ApiTags } from '@nestjs/swagger';
 
 @Injectable()
+@ApiTags('Associations')
+@Controller({
+  path: 'associations',
+  version: '1',
+})
 export class AssociationService {
   constructor(
     @Inject('ASSOCIATION_REPOSITORY')
@@ -68,12 +74,14 @@ export class AssociationService {
       relations: ['staff'],
     });
   }
-
+  @BearAuthToken()
+  @NeedPermissions('association:update')
   update(id: string, updateAssociationDto: UpdateAssociationDto) {
     //TODO: Implement update association
     return `This action updates a #${id} association`;
   }
-
+  @BearAuthToken()
+  @NeedPermissions('association:delete')
   remove(id: string) {
     return this.associationRepository.delete(id);
   }
