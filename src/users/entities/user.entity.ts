@@ -4,9 +4,11 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
 } from 'typeorm';
 import { EntityStructure } from '../../structures/entity.structure';
 import { Role } from '../../roles/entities/role.entity';
+import { Staff } from '../../association/entities/staff.entity';
 
 @Entity()
 export class User extends EntityStructure {
@@ -47,4 +49,7 @@ export class User extends EntityStructure {
   })
   @JoinTable()
   roles: Array<Role>;
+
+  @OneToMany(() => Staff, (staff) => staff.user)
+  staffOf: Staff[];
 }
