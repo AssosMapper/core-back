@@ -10,12 +10,16 @@ import {
 import { AssociationService } from './association.service';
 import { CreateAssociationDto } from './dto/create-association.dto';
 import { UpdateAssociationDto } from './dto/update-association.dto';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { ApiPaginationQuery } from '../decorators/ApiPaginationQuery.decorator';
 import { Association } from './entities/association.entity';
 
-@Controller('association')
+@ApiTags('Associations')
+@Controller({
+  path: 'associations',
+  version: '1',
+})
 export class AssociationController {
   constructor(private readonly associationService: AssociationService) {}
 
