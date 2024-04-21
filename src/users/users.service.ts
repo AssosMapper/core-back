@@ -10,12 +10,15 @@ import { User } from './entities/user.entity';
 import { hashPassword } from '../utils/auth.utils';
 import { paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { Repository } from 'typeorm';
+import { ResetToken } from './entities/reset-token.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject('USER_REPOSITORY')
     private readonly userRepository: Repository<User>,
+    @Inject('RESETTOKEN_REPOSITORY')
+    private readonly resetTokenRepository: Repository<ResetToken>,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -124,5 +127,19 @@ export class UsersService {
       where: { email },
       withDeleted,
     });
+  }
+  async findByEmailWith(email: string, relations: string[]) {
+    return await this.userRepository.findOne({
+      where: { email },
+      relations,
+    });
+  }
+
+  async addResetToken(user: User, token: string) {
+    const resetToken = new ResetToken();
+    resetToken.token = token;
+    resetToken.expirationDate = new Date(Date.now() + 5 * 60 * 1000);
+    resetToken.user = user;
+    return await this.resetTokenRepository.save(resetToken);
   }
 }

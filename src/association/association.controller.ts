@@ -14,6 +14,8 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { ApiPaginationQuery } from '../decorators/ApiPaginationQuery.decorator';
 import { Association } from './entities/association.entity';
+import { NeedPermissions } from '../decorators/need-permission.decorator';
+import { BearAuthToken } from '../decorators/BearerAuth.decorator';
 
 @ApiTags('Associations')
 @Controller({
@@ -23,6 +25,8 @@ import { Association } from './entities/association.entity';
 export class AssociationController {
   constructor(private readonly associationService: AssociationService) {}
 
+  @NeedPermissions('association:create')
+  @BearAuthToken()
   @Post()
   create(@Body() createAssociationDto: CreateAssociationDto) {
     return this.associationService.create(createAssociationDto);
@@ -41,6 +45,8 @@ export class AssociationController {
   }
 
   @Patch(':id')
+  @NeedPermissions('association:update')
+  @BearAuthToken()
   update(
     @Param('id') id: string,
     @Body() updateAssociationDto: UpdateAssociationDto,
@@ -49,6 +55,8 @@ export class AssociationController {
   }
 
   @Delete(':id')
+  @NeedPermissions('association:delete')
+  @BearAuthToken()
   remove(@Param('id') id: string) {
     return this.associationService.remove(id);
   }

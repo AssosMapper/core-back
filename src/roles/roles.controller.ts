@@ -15,9 +15,10 @@ import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiPaginationQuery } from '../decorators/ApiPaginationQuery.decorator';
 import { Role } from './entities/role.entity';
 import { NeedPermissions } from '../decorators/need-permission.decorator';
+import { BearAuthToken } from '../decorators/BearerAuth.decorator';
 
 @ApiTags('Roles')
-// @BearAuthToken()
+@BearAuthToken()
 @Controller({
   path: 'roles',
   version: '1',

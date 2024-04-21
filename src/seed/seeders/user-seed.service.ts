@@ -32,7 +32,7 @@ export class UserSeedService {
     }
     //create custom user
     //find role SuperAdmin
-    let superAdminRole = await this.roleRepository.findOne({
+    const superAdminRole = await this.roleRepository.findOne({
       where: { name: 'SuperAdmin' },
     });
     if (!superAdminRole) {
@@ -43,6 +43,7 @@ export class UserSeedService {
     user.firstName = 'Admin';
     user.lastName = 'Admin';
     user.username = 'username';
+    user.email = 'admin@mail.com';
     user.password = await hashPassword('Password123!');
     user.roles = [superAdminRole];
     users.push(user);

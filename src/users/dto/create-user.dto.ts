@@ -10,11 +10,9 @@ import { IsMatch } from '../../decorators/IsMatchConstraint.decorator';
 
 export class CreateUserDto {
   @IsEmail()
-  @IsOptional()
   @ApiProperty({
     description: 'Email',
     default: 'john.doe@example.com',
-    nullable: true,
   })
   email: string;
 

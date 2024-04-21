@@ -2,7 +2,7 @@ services:
   app:
     container_name: core-back
     image: node:20
-    user: root
+    user: "1000:1000"
     working_dir: /usr/src/app
     entrypoint: sh -c
     depends_on:
@@ -11,7 +11,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/src/app
-    command: '"npm install -g @nestjs/cli && npm install && npm run start:dev"'
+    command: '"npm install &&  npm run start:dev"'
 
   database:
     image: mariadb:10.6.15
@@ -25,6 +25,13 @@ services:
       - db_data:/var/lib/mysql:rw
     ports:
       - "3306:3306"
+
+  mail:
+    container_name: core-back-mail
+    image: soulteary/maildev
+    ports:
+      - "1080:1080"
+      - "1025:1025"
 
 volumes:
   db_data:

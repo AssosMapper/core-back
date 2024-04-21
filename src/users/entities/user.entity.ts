@@ -9,6 +9,7 @@ import {
 import { EntityStructure } from '../../structures/entity.structure';
 import { Role } from '../../roles/entities/role.entity';
 import { Staff } from '../../association/entities/staff.entity';
+import { ResetToken } from './reset-token.entity';
 
 @Entity()
 export class User extends EntityStructure {
@@ -52,4 +53,7 @@ export class User extends EntityStructure {
 
   @OneToMany(() => Staff, (staff) => staff.user)
   staffOf: Staff[];
+
+  @OneToMany(() => ResetToken, (resetToken) => resetToken.user)
+  resetTokens: ResetToken[];
 }

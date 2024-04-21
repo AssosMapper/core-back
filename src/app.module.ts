@@ -17,6 +17,10 @@ import { Role } from './roles/entities/role.entity';
 import { AssociationModule } from './association/association.module';
 import { Staff } from './association/entities/staff.entity';
 import { Association } from './association/entities/association.entity';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { EmailModule } from './email/email.module';
+import { ResetToken } from './users/entities/reset-token.entity';
 
 @Module({
   imports: [
@@ -24,9 +28,17 @@ import { Association } from './association/entities/association.entity';
       isGlobal: true,
       validationSchema: validationSchema,
     }),
-    DatabaseModule.forRoot([User, Media, Role, Permission, Association, Staff]),
+    DatabaseModule.forRoot([
+      User,
+      Media,
+      Role,
+      Permission,
+      Association,
+      Staff,
+      ResetToken,
+    ]),
     ThrottlerModule.forRootAsync({
-      imports: [ConfigModule], // Assurez-vous que ConfigModule est importé
+      imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) =>
         configService.get('NODE_ENV') === 'prod'
@@ -50,6 +62,7 @@ import { Association } from './association/entities/association.entity';
     MeModule,
     RolesModule,
     AssociationModule,
+    EmailModule,
   ],
 
   providers: [
@@ -57,6 +70,9 @@ import { Association } from './association/entities/association.entity';
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
+    AppService,
   ],
+
+  controllers: [AppController],
 })
 export class AppModule {}
